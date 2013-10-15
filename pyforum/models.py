@@ -1,22 +1,48 @@
 from django.db import models
 
 # Create your models here.
+class User(models.Model):
+    """
+    """
+    username = models.CharField(max_length=30)
+    password = models.CharField(max_length=100)
+    email = models.EmailField(max_length=254)
+    signature = models.TextField(null=True, blank=True)
+    date_joined = models.DateField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.username
+
 class Forum(models.Model):
     """
     """
-    pass
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.title
 
 class Thread(models.Model):
     """
     """
-    pass
+    title = models.CharField(max_length=100)
+    forum = models.ForeignKey(Forum)
+    pinned = models.BooleanField(default=False)
+    highlighted = models.BooleanField(default=False)
+    num_of_clicks = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.title
 
 class Post(models.Model):
     """
     """
-    pass
+    title = models.CharField(max_length=100)
+    thread = models.ForeignKey(Thread)
+    user = models.ForeignKey(User)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    last_modified models.DateTimeField(auto_now=True)
+    content = models.TextField()
 
-class User(models.Model):
-    """
-    """
-    pass
+    def __unicode__(self):
+        return self.title
