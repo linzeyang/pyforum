@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    {% block custom_script %}{% endblock %}
+    
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+    {% block custom_style %}
+      <link rel="stylesheet" href="{% static 'pyforum/style.css' %}">
+    {% endblock %}
+
+    <title>{% block title %}PyForum{% endblock %}</title>
+  </head>
+
+  <body>
+    <div class="container">
+      {% block header %}
+        <header class="row">
+          <h1>PyForum</h1>
+        </header>
+      {% endblock %}
+
+      {% block nav %}
+        <nav class="row">
+          <span>Navigation area</span>
+        </nav>
+      {% endblock %}
+
+      {% block content %}
+        <p>PyForum content area</p>
+      {% endblock %}
+
+      {% block footer %}
+        <footer class="row">
+          <small>Powered by Django. Developed by <a href="mailto:zeyanglin2013@gmail.com">Zeyang Lin</a>.</small>
+        </footer>
+      {% endblock %}
+    </div>
+  </body>
+</html>

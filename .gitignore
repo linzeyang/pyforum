@@ -1,0 +1,10 @@
+*.log
+*.pot
+*.pyc
+local_settings.py
+
+/mysite/
+/static/
+/templates/
+/manage.py
+*.db
