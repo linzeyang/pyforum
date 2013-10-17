@@ -29,7 +29,7 @@ class Thread(models.Model):
     forum = models.ForeignKey(Forum)
     pinned = models.BooleanField(default=False)
     highlighted = models.BooleanField(default=False)
-    num_of_clicks = models.IntegerField(default=0)
+    num_of_clicks = models.IntegerField("have been clicked", default=0)
 
     def __unicode__(self):
         return self.title
@@ -40,9 +40,9 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     thread = models.ForeignKey(Thread)
     user = models.ForeignKey(User)
-    date_posted = models.DateTimeField(auto_now_add=True)
-    last_modified models.DateTimeField(auto_now=True)
-    content = models.TextField()
+    time_posted = models.DateTimeField(auto_now_add=True)
+    time_last_modified = models.DateTimeField(auto_now=True)
+    content = models.TextField(blank=False)
 
     def __unicode__(self):
         return self.title
