@@ -9,12 +9,10 @@
 {% endblock %}
 
 {% block content %}
-<article class="row">
-  <header>Dummy Post 1</header>
-  <p>post content</p>
-</article>
-<article class="row">
-  <header>Dummy Post 2</header>
-  <p>post content</p>
-</article>
+  {% for p in posts %}
+  <article class="row">
+    <header>{{ p.title }}</header>
+    <p>{{ p.content }}</p>
+  </article>
+  {% endfor %}
 {% endblock %}

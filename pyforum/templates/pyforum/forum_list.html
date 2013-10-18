@@ -9,12 +9,10 @@
 {% endblock %}
 
 {% block content %}
-<section class="row">
-  <h2>Dummy Forum 1</h2>
-  <p>Dummy description</p>
-</section>
-<section class="row">
-  <h2>Dummy Forum 2</h2>
-  <p>Dummy description</p>
-</section>
+  {% for f in forums %}
+  <section class="row">
+    <h3><a href="forum/{{ f.id }}">{{ f.title }}</a></h3>
+    <p>{{ f.description }}</p>
+  </section>
+  {% endfor %}
 {% endblock %}

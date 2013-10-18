@@ -9,10 +9,9 @@
 {% endblock %}
 
 {% block content %}
-<section class="row">
-  <a href="">Dummy Thread 1</a>
-</section>
-<section class="row">
-  <a href="">Dummy Thread 2</a>
-</section>
+  {% for t in threads %}
+  <section class="row">
+    <a href="/pyforum/thread/{{ t.id }}">{{ t.title }}</a>
+  </section>
+  {% endfor %}
 {% endblock %}
