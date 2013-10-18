@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
-from pyforum.models import Forum, Thread, Post, User
+from pyforum.models import User, Forum, Thread, Post
 
 
 def forum_list(request):

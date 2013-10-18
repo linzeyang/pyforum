@@ -8,3 +8,5 @@ local_settings.py
 /templates/
 /manage.py
 *.db
+
+.idea/

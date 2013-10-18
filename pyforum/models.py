@@ -27,6 +27,7 @@ class Thread(models.Model):
     """
     title = models.CharField(max_length=100)
     forum = models.ForeignKey(Forum)
+    time_posted = models.DateTimeField(auto_now_add=True)
     pinned = models.BooleanField(default=False)
     highlighted = models.BooleanField(default=False)
     num_of_clicks = models.IntegerField("have been clicked", default=0)
