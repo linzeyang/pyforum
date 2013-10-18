@@ -1,17 +1,19 @@
 {% extends 'pyforum/base.html' %}
 
-{% block title %}Forum Title | PyForum{% endblock %}
+{% block title %}{{ forum.title }} | PyForum{% endblock %}
 
 {% block nav %}
 <nav class="row">
-  <span>Navigation area</span>
+  <span>Your location: <a href="../../">PyForum</a> >>
+    <a href="">{{ forum.title }}</a>
+  </span>
 </nav>
 {% endblock %}
 
 {% block content %}
   {% for t in threads %}
   <section class="row">
-    <a href="/pyforum/thread/{{ t.id }}">{{ t.title }}</a>
+    <a href="../../thread/{{ t.id }}">{{ t.title }}</a>
   </section>
   {% endfor %}
 {% endblock %}

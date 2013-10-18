@@ -4,14 +4,14 @@
 
 {% block nav %}
 <nav class="row">
-  <span>Navigation area</span>
+  <span>Your location: <a href="">PyForum</a></span>
 </nav>
 {% endblock %}
 
 {% block content %}
   {% for f in forums %}
   <section class="row">
-    <h3><a href="forum/{{ f.id }}">{{ f.title }}</a></h3>
+    <a href="forum/{{ f.id }}"><h3>{{ f.title }}</h3></a>
     <p>{{ f.description }}</p>
   </section>
   {% endfor %}
