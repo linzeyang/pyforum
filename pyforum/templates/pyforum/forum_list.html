@@ -11,7 +11,7 @@
 {% block content %}
   {% for f in forums %}
   <section class="row">
-    <a href="forum/{{ f.id }}"><h3>{{ f.title }}</h3></a>
+    <a href="forum/{{ f.id }}/"><h3>{{ f.title }}</h3></a>
     <p>{{ f.description }}</p>
   </section>
   {% endfor %}

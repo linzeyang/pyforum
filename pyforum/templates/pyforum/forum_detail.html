@@ -13,7 +13,10 @@
 {% block content %}
   {% for t in threads %}
   <section class="row">
-    <a href="../../thread/{{ t.id }}">{{ t.title }}</a>
+    <span class="col-md-6"><a href="../../thread/{{ t.id }}/">{{ t.title }}</a></span>
+    <span class="col-md-2"><a href="../../user/1/">user</a></span>
+    <span class="col-md-2">Clicks: {{ t.num_of_clicks }}</span>
+    <span class="col-md-2">Posted: {{ t.time_posted }}</span>
   </section>
   {% endfor %}
 {% endblock %}
