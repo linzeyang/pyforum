@@ -11,8 +11,9 @@
 {% block content %}
   {% for f in forums %}
   <section class="row">
-    <a href="forum/{{ f.id }}/"><h3>{{ f.title }}</h3></a>
+    <a href="{% url 'pyforum:forum_detail' f.id %}"><h3>{{ f.title }}</h3></a>
     <p>{{ f.description }}</p>
+    <p>Threads: {{ f.thread_set.all.count }}</p>
   </section>
   {% endfor %}
 {% endblock %}

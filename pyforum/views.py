@@ -20,22 +20,16 @@ def forum_detail(request, forum_id):
     Return all threads within a given forum
     """
     forum = get_object_or_404(Forum, pk=forum_id)
-    threads = Thread.objects.filter(forum_id=forum_id).order_by('-time_posted')
-
-    return render(request, 'pyforum/forum_detail.html', {'forum': forum,
-                                                         'threads': threads})
+    
+    return render(request, 'pyforum/forum_detail.html', {'forum': forum})
 
 def thread_detail(request, thread_id):
     """
     Return all posts within a given thread
     """
     thread = get_object_or_404(Thread, pk=thread_id)
-    forum = Forum.objects.get(id=thread.forum_id)
-    posts = Post.objects.filter(thread_id=thread_id).order_by('time_posted')
 
-    return render(request, 'pyforum/thread_detail.html', {'forum': forum,
-                                                          'thread': thread,
-                                                          'posts': posts})
+    return render(request, 'pyforum/thread_detail.html', {'thread': thread})
 
 def user_detail(request, user_id):
     """

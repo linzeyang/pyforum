@@ -4,19 +4,19 @@
 
 {% block nav %}
 <nav class="row">
-  <span>Your location: <a href="../../">PyForum</a> >>
+  <span>Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
     <a href="">{{ forum.title }}</a>
   </span>
 </nav>
 {% endblock %}
 
 {% block content %}
-  {% for t in threads %}
+  {% for thread in forum.thread_set.all %}
   <section class="row">
-    <span class="col-md-6"><a href="../../thread/{{ t.id }}/">{{ t.title }}</a></span>
-    <span class="col-md-2"><a href="../../user/1/">user</a></span>
-    <span class="col-md-2">Clicks: {{ t.num_of_clicks }}</span>
-    <span class="col-md-2">Posted: {{ t.time_posted }}</span>
+    <span class="col-md-6"><a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a></span>
+    <span class="col-md-2"><a href="{% url 'pyforum:user_detail' thread.post_set.all.0.user.id %}">{{ thread.post_set.all.0.user.username }}</a></span>
+    <span class="col-md-2">Clicks: {{ thread.num_of_clicks }} Posts: {{ thread.post_set.all.count }}</span>
+    <span class="col-md-2">Posted: {{ thread.time_posted }}</span>
   </section>
   {% endfor %}
 {% endblock %}

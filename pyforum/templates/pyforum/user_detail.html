@@ -4,8 +4,8 @@
 
 {% block nav %}
 <nav class="row">
-  <span>Your location: <a href="../../">PyForum</a> >>
-    <a href="../../user/{{ user.id }}/">User Detail</a>
+  <span>Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
+    <a href="">User Detail</a>
   </span>
 </nav>
 {% endblock %}
@@ -16,5 +16,9 @@
   <p>Email: {{ user.email }}</p>
   <p>Signature: {{ user.signature }}</p>
   <p>Date Joined: {{ user.date_joined }}</p>
+  <b>Posts:</b>
+  {% for post in user.post_set.all %}
+  <p>{{ post.title }}   ---   {{ post.time_posted }}</p>
+  {% endfor %}
 </section>
 {% endblock %}

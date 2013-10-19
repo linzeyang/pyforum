@@ -1,22 +1,22 @@
 {% extends 'pyforum/base.html' %}
 
-{% block title %}{{ thread.title }} | {{ forum.title }} | PyForum{% endblock %}
+{% block title %}{{ thread.title }} | {{ thread.forum.title }} | PyForum{% endblock %}
 
 {% block nav %}
 <nav class="row">
-  <span>Your location: <a href="../../">PyForum</a> >>
-    <a href="../../forum/{{ forum.id }}/">{{ forum.title }}</a> >>
+  <span>Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
+    <a href="{% url 'pyforum:forum_detail' thread.forum.id %}">{{ thread.forum.title }}</a> >>
     <a href="">{{ thread.title }}</a>
   </span>
 </nav>
 {% endblock %}
 
 {% block content %}
-  {% for p in posts %}
+  {% for post in thread.post_set.all %}
   <article class="row">
-    <header class="col-md-offset-1"><h3>{{ p.title }}</h3></header>
-    <p class="col-md-offset-1">Posted: {{ p.time_posted }}</p>
-    <p class="col-md-10 col-md-offset-1">{{ p.content }}</p>
+    <header class="col-md-offset-1"><h3>{{ post.title }}</h3></header>
+    <p class="col-md-offset-1">Posted: {{ post.time_posted }}  By: {{post.user.username}}</p>
+    <p class="col-md-10 col-md-offset-1">{{ post.content }}</p>
   </article>
   {% endfor %}
 {% endblock %}

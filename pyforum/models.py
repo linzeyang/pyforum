@@ -32,6 +32,9 @@ class Thread(models.Model):
     highlighted = models.BooleanField(default=False)
     num_of_clicks = models.IntegerField("have been clicked", default=0)
 
+    class Meta:
+        ordering = ['-time_posted']
+
     def __unicode__(self):
         return self.title
 
