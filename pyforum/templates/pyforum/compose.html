@@ -1,28 +1,52 @@
 {% extends 'pyforum/base.html' %}
 
-{% block title %}Compose | PyForum{% endblock %}
+{% block title %}
+Compose New {% ifequal mode 'new_thread' %}Thread{% else %}Post{% endifequal %} | PyForum
+{% endblock %}
 
 {% block nav %}
-Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >> <a href="">Compose</a>
+Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >> 
+{% ifequal mode 'new_thread' %}
+<a href="{% url 'pyforum:forum_detail' forum.id %}">{{ forum.title }}</a>
+{% else %}
+<a href="{% url 'pyforum:forum_detail' thread.forum.id %}">{{ thread.forum.title }}</a> >>  
+<a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a>
+{% endifequal %} >> 
+<a href="">Compose</a>
 {% endblock %}
 
 {% block content %}
 <form role="form" action="{% url 'pyforum:save_post' %}" method="POST">
   {% csrf_token %}
+
   <div class="form-group">
-    <label for="">Title</label>
-    <input type="text" name="title" class="form-control" placeholder="Enter Title" />
+    <label>Title</label>
+    <input type="text" name="title" class="form-control" 
+      {% ifequal mode 'new_thread' %}
+        placeholder="Enter Title"
+      {% else %}
+        value="Re: {{ thread.title }}"
+      {% endifequal %} />
   </div>
-  <input type="hidden" name="forum_id" value="{{ forum_id }}">
-  <input type="hidden" name="user_id" value="1">
+  
   <div class="form-group">
     <label for="">Content</label>
     <textarea name="content" class="form-control" rows="15"></textarea>
   </div>
+
+  <input type="hidden" name="user_id" value="1">
+  <input type="hidden" name="mode" value="{{ mode }}" />
+
+  {% ifequal mode 'new_thread' %}
+  <input type="hidden" name="forum_id" value="{{ forum.id }}">
   <div class="checkbox">
-    <input type="checkbox" value="pinned" /><label>Pin</label><br />
-    <input type="checkbox" value="highlighted" /><label>Highlight</label>
+    <input type="checkbox" name="pinned" /><label>Pin</label><br />
+    <input type="checkbox" name="highlighted" /><label>Highlight</label>
   </div>
+  {% else %}
+  <input type="hidden" name="thread_id" value="{{ thread.id }}">
+  {% endifequal %}
+  
   <input type="submit" class="btn btn-default btn-lg" value="Submit" />
 </form>
 {% endblock %}

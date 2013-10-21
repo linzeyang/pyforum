@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-  <a href="compose/" class="btn btn-default">New Thread</a>
+  <a href="{% url 'pyforum:compose_thread' forum.id %}" class="btn btn-default">New Thread</a>
   {% for thread in forum.thread_set.all %}
   <section class="row">
     <span class="col-md-6"><a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a></span>
@@ -20,5 +20,5 @@
     <span class="col-md-2">Posted: {{ thread.time_posted }}</span>
   </section>
   {% endfor %}
-  <a href="compose/" class="btn btn-default">New Thread</a>
+  <a href="{% url 'pyforum:compose_thread' forum.id %}" class="btn btn-default">New Thread</a>
 {% endblock %}

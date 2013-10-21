@@ -23,41 +23,62 @@ def forum_detail(request, forum_id):
     
     return render(request, 'pyforum/forum_detail.html', {'forum': forum})
 
-def compose(request, forum_id):
+def compose_thread(request, forum_id):
     """
     Write a new thread
     """
-    get_object_or_404(Forum, pk=forum_id)
+    forum = get_object_or_404(Forum, pk=forum_id)
 
-    return render(request, 'pyforum/compose.html', {'forum_id': forum_id})
+    return render(request, 'pyforum/compose.html', {'mode': 'new_thread',
+                                                    'forum': forum})
+
+def compose_post(request, thread_id):
+    """
+    Make a reply to a existing thread
+    """
+    thread = get_object_or_404(Thread, pk=thread_id)
+
+    return render(request, 'pyforum/compose.html', {'mode': 'new_post',
+                                                    'thread': thread})
 
 def save_post(request):
     """
-    Try to save a new post/thread into database
+    Try to save a new thread/post into database
     """
+    mode = request.POST['mode']
     title = request.POST['title']
-    forum_id = request.POST['forum_id']
-    user_id = request.POST['user_id']
     content = request.POST['content']
-    if request.POST.has_key('pinned'):
-        pinned = True
-    else:
-        pinned = False
-    if request.POST.has_key('highlighted'):
-        highlighted = True
-    else:
-        highlighted = False
 
-    forum = get_object_or_404(Forum, pk=forum_id)
+    user_id = request.POST['user_id']
     user = get_object_or_404(User, pk=user_id)
+    
+    if mode == 'new_thread':
+        forum_id = request.POST['forum_id']
+        forum = get_object_or_404(Forum, pk=forum_id)
 
-    new_thread = Thread(title=title, forum=forum, pinned=pinned, highlighted=highlighted)
-    new_thread.save()
+        pinned = request.POST.has_key('pinned')
+        highlighted = request.POST.has_key('highlighted')
 
-    new_post = Post(title=title, thread=new_thread, user=user, content=content)
-    new_post.save()
+        new_thread = Thread(title=title, forum=forum, pinned=pinned,
+                            highlighted=highlighted)
+        new_thread.save()
 
-    return HttpResponseRedirect(reverse('pyforum:forum_detail', args=(forum_id,)))
+        new_post = Post(title=title, thread=new_thread, user=user,
+                        content=content)
+        new_post.save()
+
+        return HttpResponseRedirect(reverse('pyforum:forum_detail', 
+                                            args=(forum_id,)))
+
+    elif mode == 'new_post':
+        thread_id = request.POST['thread_id']
+        thread = get_object_or_404(Thread, pk=thread_id)
+
+        new_post = Post(title=title, thread=thread, user=user, content=content)
+        new_post.save()
+
+        return HttpResponseRedirect(reverse('pyforum:thread_detail', 
+                                            args=(thread_id,)))
 
 def thread_detail(request, thread_id):
     """
