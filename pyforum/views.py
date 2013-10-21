@@ -23,6 +23,13 @@ def forum_detail(request, forum_id):
     
     return render(request, 'pyforum/forum_detail.html', {'forum': forum})
 
+def compose(request, forum_id):
+    """
+    Write a new thread
+    """
+    
+    return render(request, 'pyforum/compose.html')
+
 def thread_detail(request, thread_id):
     """
     Return all posts within a given thread

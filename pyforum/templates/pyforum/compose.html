@@ -1,0 +1,11 @@
+{% extends 'pyforum/base.html' %}
+
+{% block title %}Compose | PyForum{% endblock %}
+
+{% block nav %}
+Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >> <a href="">Compose</a>
+{% endblock %}
+
+{% block content %}
+<p>Write your post here!</p>
+{% endblock %}
