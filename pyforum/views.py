@@ -95,3 +95,25 @@ def user_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
 
     return render(request, 'pyforum/user_detail.html', {'user': user})
+
+def register(request):
+    """
+    Register a new user account
+    """
+
+    return render(request, 'pyforum/register.html')
+
+def save_user(request):
+    """
+    Try to save new user info into database
+    """
+    username = request.POST['username']
+    email = request.POST['email']
+    password = request.POST['password']
+    signature = request.POST['signature']
+
+    new_user = User(username=username, email=email, password=password,
+                    signature=signature)
+    new_user.save()
+
+    return HttpResponseRedirect(reverse('pyforum:forum_list'))
