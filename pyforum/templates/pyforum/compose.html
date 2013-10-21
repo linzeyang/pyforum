@@ -7,5 +7,22 @@ Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >> <a href="
 {% endblock %}
 
 {% block content %}
-<p>Write your post here!</p>
+<form role="form" action="{% url 'pyforum:save_post' %}" method="POST">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="">Title</label>
+    <input type="text" name="title" class="form-control" placeholder="Enter Title" />
+  </div>
+  <input type="hidden" name="forum_id" value="{{ forum_id }}">
+  <input type="hidden" name="user_id" value="1">
+  <div class="form-group">
+    <label for="">Content</label>
+    <textarea name="content" class="form-control" rows="15"></textarea>
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" value="pinned" /><label>Pin</label><br />
+    <input type="checkbox" value="highlighted" /><label>Highlight</label>
+  </div>
+  <input type="submit" class="btn btn-default btn-lg" value="Submit" />
+</form>
 {% endblock %}

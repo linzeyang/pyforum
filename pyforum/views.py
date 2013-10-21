@@ -27,8 +27,37 @@ def compose(request, forum_id):
     """
     Write a new thread
     """
-    
-    return render(request, 'pyforum/compose.html')
+    get_object_or_404(Forum, pk=forum_id)
+
+    return render(request, 'pyforum/compose.html', {'forum_id': forum_id})
+
+def save_post(request):
+    """
+    Try to save a new post/thread into database
+    """
+    title = request.POST['title']
+    forum_id = request.POST['forum_id']
+    user_id = request.POST['user_id']
+    content = request.POST['content']
+    if request.POST.has_key('pinned'):
+        pinned = True
+    else:
+        pinned = False
+    if request.POST.has_key('highlighted'):
+        highlighted = True
+    else:
+        highlighted = False
+
+    forum = get_object_or_404(Forum, pk=forum_id)
+    user = get_object_or_404(User, pk=user_id)
+
+    new_thread = Thread(title=title, forum=forum, pinned=pinned, highlighted=highlighted)
+    new_thread.save()
+
+    new_post = Post(title=title, thread=new_thread, user=user, content=content)
+    new_post.save()
+
+    return HttpResponseRedirect(reverse('pyforum:forum_detail', args=(forum_id,)))
 
 def thread_detail(request, thread_id):
     """

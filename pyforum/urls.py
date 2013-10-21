@@ -18,6 +18,7 @@ urlpatterns = patterns('pyforum.views',
     url(r'^$', 'forum_list', name='forum_list'),
     url(r'^forum/(?P<forum_id>\d+)/$', 'forum_detail', name='forum_detail'),
     url(r'^forum/(?P<forum_id>\d+)/compose/$', 'compose', name='compose'),
+    url(r'^save_post/$', 'save_post', name="save_post"),
     url(r'^thread/(?P<thread_id>\d+)/$', 'thread_detail', name='thread_detail'),
     url(r'^user/(?P<user_id>\d+)/$', 'user_detail', name='user_detail'),
 )
