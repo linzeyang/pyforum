@@ -1,9 +1,10 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from pyforum.models import User, Forum, Thread, Post
 
 
-class UserAdmin(admin.ModelAdmin):
+class MyUserAdmin(UserAdmin):
     """
     """
     date_hierarchy = 'date_joined'
@@ -31,7 +32,7 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ['thread', 'user']
     search_fields = ['title']
 
+admin.site.register(User, MyUserAdmin)
 admin.site.register(Forum, ForumAdmin)
 admin.site.register(Thread, ThreadAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(User, UserAdmin)

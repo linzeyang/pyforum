@@ -1,15 +1,12 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
 # Create your models here.
-class User(models.Model):
+class User(AbstractUser):
     """
     """
-    username = models.CharField(max_length=30)
-    password = models.CharField(max_length=100)
-    email = models.EmailField(max_length=254)
     signature = models.TextField(null=True, blank=True)
-    date_joined = models.DateField(auto_now_add=True)
 
     def __unicode__(self):
         return self.username

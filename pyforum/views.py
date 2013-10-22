@@ -1,5 +1,6 @@
 # Create your views here.
 from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 # from django.utils import timezone
@@ -29,6 +30,9 @@ def compose_thread(request, forum_id):
     """
     Write a new thread
     """
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('pyforum:forum_list'))
+
     forum = get_object_or_404(Forum, pk=forum_id)
 
     return render(request, 'pyforum/compose.html', {'mode': 'new_thread',
@@ -39,6 +43,9 @@ def compose_post(request, thread_id):
     """
     Make a reply to a existing thread
     """
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('pyforum:forum_list'))
+
     thread = get_object_or_404(Thread, pk=thread_id)
 
     return render(request, 'pyforum/compose.html', {'mode': 'new_post',
@@ -49,6 +56,9 @@ def save_post(request):
     """
     Try to save a new thread/post into database
     """
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('pyforum:forum_list'))
+
     mode = request.POST['mode']
     title = request.POST['title']
     content = request.POST['content']
@@ -60,8 +70,8 @@ def save_post(request):
         forum_id = request.POST['forum_id']
         forum = get_object_or_404(Forum, pk=forum_id)
 
-        pinned = request.POST.has_key('pinned')
-        highlighted = request.POST.has_key('highlighted')
+        pinned = 'pinned' in request.POST
+        highlighted = 'highlighted' in request.POST
 
         new_thread = Thread(title=title, forum=forum, pinned=pinned,
                             highlighted=highlighted)
@@ -110,6 +120,7 @@ def sign_up(request):
 
     return render(request, 'pyforum/sign_up.html')
 
+
 def save_user(request):
     """
     Try to save new user info into database
@@ -119,8 +130,8 @@ def save_user(request):
     password = request.POST['password']
     signature = request.POST['signature']
 
-    new_user = User(username=username, email=email, password=password,
-                    signature=signature)
+    new_user = User.objects.create_user(username, email, password,
+                                        signature=signature)
     new_user.save()
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))
@@ -128,6 +139,7 @@ def save_user(request):
 
 def sign_in(request):
     """
+    The view for user to enter credentials
     """
 
     return render(request, 'pyforum/sign_in.html')
@@ -135,13 +147,26 @@ def sign_in(request):
 
 def auth_user(request):
     """
+    Try to log in a user
     """
+    username = request.POST['username']
+    password = request.POST['password']
+
+    user = authenticate(username=username, password=password)
+
+    if user is not None:
+        login(request, user)
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))
 
 
 def sign_out(request):
     """
+    Log out the current user
     """
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('pyforum:forum_list'))
+
+    logout(request)
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))

@@ -12,7 +12,10 @@
 {% endblock %}
 
 {% block content %}
+  {% if user.is_authenticated %}
   <a href="{% url 'pyforum:compose_post' thread.id %}" class="btn btn-default">Reply</a>
+  {% endif %}
+
   {% for post in thread.post_set.all %}
   <article class="row">
     <header class="col-md-offset-1"><h3>{{ post.title }}</h3></header>
@@ -22,5 +25,8 @@
     <p class="col-md-10 col-md-offset-1">{{ post.content }}</p>
   </article>
   {% endfor %}
+
+  {% if user.is_authenticated %}
   <a href="{% url 'pyforum:compose_post' thread.id %}" class="btn btn-default">Reply</a>
+  {% endif %}
 {% endblock %}

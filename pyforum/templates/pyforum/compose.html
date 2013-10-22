@@ -34,7 +34,7 @@ Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
     <textarea name="content" class="form-control" rows="15"></textarea>
   </div>
 
-  <input type="hidden" name="user_id" value="1">
+  <input type="hidden" name="user_id" value="{{ user.id }}">
   <input type="hidden" name="mode" value="{{ mode }}" />
 
   {% ifequal mode 'new_thread' %}

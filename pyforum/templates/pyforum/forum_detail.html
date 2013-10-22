@@ -11,7 +11,10 @@
 {% endblock %}
 
 {% block content %}
+  {% if user.is_authenticated %}
   <a href="{% url 'pyforum:compose_thread' forum.id %}" class="btn btn-default">New Thread</a>
+  {% endif %}
+
   {% for thread in forum.thread_set.all %}
   <section class="row">
     <span class="col-md-6"><a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a></span>
@@ -20,5 +23,8 @@
     <span class="col-md-2">Posted: {{ thread.time_posted }}</span>
   </section>
   {% endfor %}
+
+  {% if user.is_authenticated %}
   <a href="{% url 'pyforum:compose_thread' forum.id %}" class="btn btn-default">New Thread</a>
+  {% endif %}
 {% endblock %}
