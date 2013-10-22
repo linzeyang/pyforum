@@ -1,0 +1,40 @@
+{% extends 'pyforum/base.html' %}
+
+{% block title %}Sign Up | PyForum{% endblock %}
+
+{% block nav %}
+Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >> <a href="">Sign Up</a>
+{% endblock %}
+
+{% block content %}
+<form role="form" class="form-horizontal" action="{% url 'pyforum:save_user' %}" method="POST">
+  {% csrf_token %}
+  <div class="form-group">
+    <label class="col-md-2 control-label">Username: </label>
+    <div class="col-md-3">
+      <input type="text" name="username" class="form-control" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-2 control-label">Email: </label>
+    <div class="col-md-3">
+      <input type="email" name="email" class="form-control" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-2 control-label">Password: </label>
+    <div class="col-md-3">
+      <input type="password" name="password" class="form-control" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-2 control-label">Signature: </label>
+    <div class="col-md-5">
+      <textarea name="signature" rows="5" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="submit" class="col-md-1 col-md-offset-2 btn btn-default" value="Sign Up" />
+  </div>
+</form>
+{% endblock %}

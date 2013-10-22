@@ -96,12 +96,12 @@ def user_detail(request, user_id):
 
     return render(request, 'pyforum/user_detail.html', {'user': user})
 
-def register(request):
+def sign_up(request):
     """
     Register a new user account
     """
 
-    return render(request, 'pyforum/register.html')
+    return render(request, 'pyforum/sign_up.html')
 
 def save_user(request):
     """
@@ -115,5 +115,23 @@ def save_user(request):
     new_user = User(username=username, email=email, password=password,
                     signature=signature)
     new_user.save()
+
+    return HttpResponseRedirect(reverse('pyforum:forum_list'))
+
+def sign_in(request):
+    """
+    """
+
+    return render(request, 'pyforum/sign_in.html')
+
+def auth_user(request):
+    """
+    """
+
+    return HttpResponseRedirect(reverse('pyforum:forum_list'))
+
+def sign_out(request):
+    """
+    """
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))
