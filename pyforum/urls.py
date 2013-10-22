@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -17,9 +17,11 @@ urlpatterns = patterns('pyforum.views',
 
     url(r'^$', 'forum_list', name='forum_list'),
     url(r'^forum/(?P<forum_id>\d+)/$', 'forum_detail', name='forum_detail'),
-    url(r'^forum/(?P<forum_id>\d+)/compose/$', 'compose_thread', name='compose_thread'),
+    url(r'^forum/(?P<forum_id>\d+)/compose/$', 'compose_thread',
+        name='compose_thread'),
     url(r'^thread/(?P<thread_id>\d+)/$', 'thread_detail', name='thread_detail'),
-    url(r'^thread/(?P<thread_id>\d+)/compose/$', 'compose_post', name='compose_post'),
+    url(r'^thread/(?P<thread_id>\d+)/compose/$', 'compose_post',
+        name='compose_post'),
     url(r'^save_post/$', 'save_post', name='save_post'),
     url(r'^user/(?P<user_id>\d+)/$', 'user_detail', name='user_detail'),
     url(r'^sign_up/$', 'sign_up', name='sign_up'),

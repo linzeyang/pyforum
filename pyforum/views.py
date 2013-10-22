@@ -2,7 +2,7 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.utils import timezone
+# from django.utils import timezone
 
 from pyforum.models import User, Forum, Thread, Post
 
@@ -15,6 +15,7 @@ def forum_list(request):
 
     return render(request, 'pyforum/forum_list.html', {'forums': forums})
 
+
 def forum_detail(request, forum_id):
     """
     Return all threads within a given forum
@@ -22,6 +23,7 @@ def forum_detail(request, forum_id):
     forum = get_object_or_404(Forum, pk=forum_id)
     
     return render(request, 'pyforum/forum_detail.html', {'forum': forum})
+
 
 def compose_thread(request, forum_id):
     """
@@ -32,6 +34,7 @@ def compose_thread(request, forum_id):
     return render(request, 'pyforum/compose.html', {'mode': 'new_thread',
                                                     'forum': forum})
 
+
 def compose_post(request, thread_id):
     """
     Make a reply to a existing thread
@@ -40,6 +43,7 @@ def compose_post(request, thread_id):
 
     return render(request, 'pyforum/compose.html', {'mode': 'new_post',
                                                     'thread': thread})
+
 
 def save_post(request):
     """
@@ -80,6 +84,7 @@ def save_post(request):
         return HttpResponseRedirect(reverse('pyforum:thread_detail', 
                                             args=(thread_id,)))
 
+
 def thread_detail(request, thread_id):
     """
     Return all posts within a given thread
@@ -88,6 +93,7 @@ def thread_detail(request, thread_id):
 
     return render(request, 'pyforum/thread_detail.html', {'thread': thread})
 
+
 def user_detail(request, user_id):
     """
     Display several pieces of information about a given user
@@ -95,6 +101,7 @@ def user_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
 
     return render(request, 'pyforum/user_detail.html', {'user': user})
+
 
 def sign_up(request):
     """
@@ -118,17 +125,20 @@ def save_user(request):
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))
 
+
 def sign_in(request):
     """
     """
 
     return render(request, 'pyforum/sign_in.html')
 
+
 def auth_user(request):
     """
     """
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))
+
 
 def sign_out(request):
     """

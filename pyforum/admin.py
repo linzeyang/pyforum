@@ -9,10 +9,12 @@ class UserAdmin(admin.ModelAdmin):
     date_hierarchy = 'date_joined'
     search_fields = ['username']
 
+
 class ForumAdmin(admin.ModelAdmin):
     """
     """
     pass
+
 
 class ThreadAdmin(admin.ModelAdmin):
     """
@@ -20,6 +22,7 @@ class ThreadAdmin(admin.ModelAdmin):
     date_hierarchy = 'time_posted'
     list_filter = ['pinned', 'highlighted', 'forum']
     search_fields = ['title']
+
 
 class PostAdmin(admin.ModelAdmin):
     """

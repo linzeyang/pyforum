@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class User(models.Model):
     """
@@ -13,6 +14,7 @@ class User(models.Model):
     def __unicode__(self):
         return self.username
 
+
 class Forum(models.Model):
     """
     """
@@ -21,6 +23,7 @@ class Forum(models.Model):
 
     def __unicode__(self):
         return self.title
+
 
 class Thread(models.Model):
     """
@@ -37,6 +40,7 @@ class Thread(models.Model):
 
     def __unicode__(self):
         return self.title
+
 
 class Post(models.Model):
     """

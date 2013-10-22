@@ -28,6 +28,7 @@
         <a href="{% url 'pyforum:sign_up' %}">Sign Up</a>
         <a href="{% url 'pyforum:sign_in' %}">Sign In</a>
       {% else %}
+        You have signed in using [{{ user.username }}].
         <a href="{% url 'pyforum:sign_out' %}">Sign Out</a>
       {% endif %}
       </p>
