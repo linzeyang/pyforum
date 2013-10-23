@@ -12,6 +12,9 @@
 {% endblock %}
 
 {% block content %}
+{% if error %}
+<p class="text-danger">{{ error }}</p>
+{% endif %}
 <form role="form" class="form-horizontal" action="{% url 'pyforum:auth_user' %}" method="POST">
   {% csrf_token %}
   <div class="form-group">

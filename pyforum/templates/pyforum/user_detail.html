@@ -13,8 +13,8 @@
 
 {% block content %}
 <div id="user">
+  <p class="text-info lead">{{ user.username }}</span>
   <dl class="dl-horizontal">
-    <span class="lead">{{ user.username }}</span>
     <dt>UID:</dt><dd>{{ user.id }}</dd>
     <dt>First Name:</dt><dd>{{ user.first_name }}</dd>
     <dt>Last Name:</dt><dd>{{ user.last_name }}</dd>
@@ -24,7 +24,7 @@
     <dt>Last Login:</dt><dd>{{ user.last_login }}</dd>
   </dl>
   <hr />
-  <b>Posts:</b>
+  <p class="text-warning lead">Posts:</p>
   <dl class="dl-horizontal">
   {% for post in user.post_set.all %}
   <dt>{{ post.title }}</dt><dd>{{ post.time_posted }}</dd>

@@ -154,6 +154,8 @@ def sign_up(request):
     """
     Register a new user account
     """
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('pyforum:forum_list'))
 
     return render(request, 'pyforum/sign_up.html')
 
@@ -165,19 +167,37 @@ def save_user(request):
     username = request.POST['username']
     email = request.POST['email']
     password = request.POST['password']
+    password_again = request.POST['password_again']
     signature = request.POST['signature']
+
+    if len(username) == 0:
+        return render(request, 'pyforum/sign_up.html', 
+                        {'error': 'Username cannot be empty !'})
+
+    if len(email) == 0:
+        return render(request, 'pyforum/sign_up.html', 
+                        {'error': 'Email address cannot be empty !'})
+
+    if password != password_again:
+        return render(request, 'pyforum/sign_up.html', 
+                        {'error': 'Passwords are not identical !'})
+    elif len(password) == 0:
+        return render(request, 'pyforum/sign_up.html', 
+                        {'error': 'Password cannot be empty !'})
 
     new_user = User.objects.create_user(username, email, password,
                                         signature=signature)
     new_user.save()
 
-    return HttpResponseRedirect(reverse('pyforum:forum_list'))
+    return HttpResponseRedirect(reverse('pyforum:sign_in'))
 
 
 def sign_in(request):
     """
     The view for user to enter credentials
     """
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('pyforum:forum_list'))
 
     return render(request, 'pyforum/sign_in.html')
 
@@ -189,10 +209,21 @@ def auth_user(request):
     username = request.POST['username']
     password = request.POST['password']
 
+    if len(username) == 0 or len(password) == 0:
+        return render(request, 'pyforum/sign_in.html', 
+                        {'error': 'Username/Password cannot be empty !'})
+
     user = authenticate(username=username, password=password)
 
-    if user is not None:
-        login(request, user)
+    if user is None:
+        return render(request, 'pyforum/sign_in.html', 
+                        {'error': 'Username/Password incorrect !'})
+
+    if not user.is_active:
+        return render(request, 'pyforum/sign_in.html', 
+                        {'error': 'Your account is inactive !'})
+
+    login(request, user)
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))
 

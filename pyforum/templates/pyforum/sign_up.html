@@ -12,28 +12,37 @@
 {% endblock %}
 
 {% block content %}
+{% if error %}
+<p class="text-danger">{{ error }}</p>
+{% endif %}
 <form role="form" class="form-horizontal" action="{% url 'pyforum:save_user' %}" method="POST">
   {% csrf_token %}
   <div class="form-group">
-    <label for="input_username" class="col-md-1 control-label">Username: </label>
+    <label for="input_username" class="col-md-2 control-label">Username: </label>
     <div class="col-md-3">
       <input type="text" name="username" id="input_username" class="form-control" />
     </div>
   </div>
   <div class="form-group">
-    <label for="input_email" class="col-md-1 control-label">Email: </label>
+    <label for="input_email" class="col-md-2 control-label">Email: </label>
     <div class="col-md-3">
       <input type="email" name="email" id="input_email" class="form-control" />
     </div>
   </div>
   <div class="form-group">
-    <label for="input_password" class="col-md-1 control-label">Password: </label>
+    <label for="input_password" class="col-md-2 control-label">Password: </label>
     <div class="col-md-3">
       <input type="password" name="password" id="input_password" class="form-control" />
     </div>
   </div>
   <div class="form-group">
-    <label for="input_signature" class="col-md-1 control-label">Signature: </label>
+    <label for="input_password_again" class="col-md-2 control-label">Confirm Password: </label>
+    <div class="col-md-3">
+      <input type="password" name="password_again" id="input_password_again" class="form-control" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="input_signature" class="col-md-2 control-label">Signature: </label>
     <div class="col-md-5">
       <textarea name="signature" rows="5" id="input_signature" class="form-control"></textarea>
     </div>
