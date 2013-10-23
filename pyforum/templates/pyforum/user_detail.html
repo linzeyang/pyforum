@@ -13,19 +13,22 @@
 
 {% block content %}
 <div id="user">
-  <section>
-    <div class="row"><span class="col-md-6"><h2>{{ user.username }}</h2></span></div>
-    <div class="row"><span class="col-md-3">First Name:</span><span class="col-md-3">{{ user.first_name }}</span></div>
-    <div class="row"><span class="col-md-3">Last Name:</span><span class="col-md-3">{{ user.last_name }}</span></div>
-    <div class="row"><span class="col-md-3">Email:</span><span class="col-md-3">{{ user.email }}</span></div>
-    <div class="row"><span class="col-md-3">Signature:</span><span class="col-md-3">{{ user.signature }}</span></div>
-    <div class="row"><span class="col-md-3">Date Joined:</span><span class="col-md-3">{{ user.date_joined }}</span></div>
-    <div class="row"><span class="col-md-3">Last Login:</span><span class="col-md-3">{{ user.last_login }}</span></div>
-    <hr />
-    <b>Posts:</b>
-    {% for post in user.post_set.all %}
-    <div class="row"><span class="col-md-6">{{ post.title }}</span><span class="col-md-3">{{ post.time_posted }}</span></div>
-    {% endfor %}
-  </section>
+  <dl class="dl-horizontal">
+    <span class="lead">{{ user.username }}</span>
+    <dt>UID:</dt><dd>{{ user.id }}</dd>
+    <dt>First Name:</dt><dd>{{ user.first_name }}</dd>
+    <dt>Last Name:</dt><dd>{{ user.last_name }}</dd>
+    <dt>Email:</dt><dd>{{ user.email }}</dd>
+    <dt>Signature:</dt><dd>{{ user.signature }}</dd>
+    <dt>Date Joined:</dt><dd>{{ user.date_joined }}</dd>
+    <dt>Last Login:</dt><dd>{{ user.last_login }}</dd>
+  </dl>
+  <hr />
+  <b>Posts:</b>
+  <dl class="dl-horizontal">
+  {% for post in user.post_set.all %}
+  <dt>{{ post.title }}</dt><dd>{{ post.time_posted }}</dd>
+  {% endfor %}
+  </dl>
 </div>
 {% endblock %}

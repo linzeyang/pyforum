@@ -19,6 +19,7 @@
 #forum_list p {
 	margin-bottom: 5px;
 	font-size: 1.3em;
+	color: #B33B95;
 }
 
 #thread_list {
@@ -46,8 +47,13 @@
 
 .thread_content {
 	font-size: 1.2em;
+	margin-top: 20px;
 }
 
 #user {
+	margin-bottom: 20px;
+}
+
+form {
 	margin-bottom: 20px;
 }

@@ -51,3 +51,6 @@ class Post(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def ever_modified(self):
+        return self.time_last_modified > self.time_posted

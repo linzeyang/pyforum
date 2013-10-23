@@ -1,7 +1,15 @@
 {% extends 'pyforum/base.html' %}
 
 {% block title %}
-Compose New {% ifequal mode 'new_thread' %}Thread{% else %}Post{% endifequal %} | PyForum
+{% ifequal mode 'new_thread' %}
+  Compose New Thread
+{% else %}
+{% ifequal mode 'new_post' %}
+  Compose New Post
+{% else %}
+{% ifequal mode 'edit_post' %}
+  Edit Post
+{% endifequal %}{% endifequal %}{% endifequal %} | PyForum
 {% endblock %}
 
 {% block nav %}
@@ -12,17 +20,30 @@ Compose New {% ifequal mode 'new_thread' %}Thread{% else %}Post{% endifequal %} 
 <span>
   <a href="{% url 'pyforum:forum_detail' forum.id %}">{{ forum.title }}</a>
 </span>
-{% else %}
+<span>
+  <a href="">Compose</a>
+</span>
+{% else %}{% ifequal mode 'new_post' %}
 <span>
   <a href="{% url 'pyforum:forum_detail' thread.forum.id %}">{{ thread.forum.title }}</a> >>
 </span>
 <span>
-  <a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a>
+  <a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a> >>
 </span>
-{% endifequal %} >>
 <span>
   <a href="">Compose</a>
 </span>
+{% else %}{% ifequal mode 'edit_post' %}
+<span>
+  <a href="{% url 'pyforum:forum_detail' post.thread.forum.id %}">{{ post.thread.forum.title }}</a> >>
+</span>
+<span>
+  <a href="{% url 'pyforum:thread_detail' post.thread.id %}">{{ post.thread.title }}</a> >>
+</span>
+<span>
+  <a href="">Edit</a>
+</span>
+{% endifequal %}{% endifequal %}{% endifequal %}
 {% endblock %}
 
 {% block content %}
@@ -30,18 +51,20 @@ Compose New {% ifequal mode 'new_thread' %}Thread{% else %}Post{% endifequal %} 
   {% csrf_token %}
 
   <div class="form-group">
-    <label>Title</label>
-    <input type="text" name="title" class="form-control" 
+    <label for="input_title">Title</label>
+    <input type="text" name="title" id="input_title" class="form-control" 
       {% ifequal mode 'new_thread' %}
         placeholder="Enter Title"
-      {% else %}
+      {% else %}{% ifequal mode 'new_post' %}
         value="Re: {{ thread.title }}"
-      {% endifequal %} />
+      {% else %}{% ifequal mode 'edit_post' %}
+        value="Re: {{ post.thread.title }}"
+      {% endifequal %}{% endifequal %}{% endifequal %} />
   </div>
   
   <div class="form-group">
-    <label for="">Content</label>
-    <textarea name="content" class="form-control" rows="15"></textarea>
+    <label for="input_content">Content</label>
+    <textarea name="content" id="input_content" class="form-control" rows="12">{% ifequal mode 'edit_post' %}{{ post.content }}{% endifequal %}</textarea>
   </div>
 
   <input type="hidden" name="user_id" value="{{ user.id }}">
@@ -50,13 +73,15 @@ Compose New {% ifequal mode 'new_thread' %}Thread{% else %}Post{% endifequal %} 
   {% ifequal mode 'new_thread' %}
   <input type="hidden" name="forum_id" value="{{ forum.id }}">
   <div class="checkbox">
-    <input type="checkbox" name="pinned" /><label>Pin</label><br />
-    <input type="checkbox" name="highlighted" /><label>Highlight</label>
+    <label><input type="checkbox" name="pinned" />Pin</label><br />
+    <label><input type="checkbox" name="highlighted" />Highlight</label>
   </div>
-  {% else %}
+  {% else %}{% ifequal mode 'new_post' %}
   <input type="hidden" name="thread_id" value="{{ thread.id }}">
-  {% endifequal %}
+  {% else %}{% ifequal mode 'edit_post' %}
+  <input type="hidden" name="post_id" value="{{ post.id }}">
+  {% endifequal %}{% endifequal %}{% endifequal %}
   
-  <input type="submit" class="btn btn-default btn-lg" value="Submit" />
+  <input type="submit" class="btn btn-warning btn-lg" value="Submit" />
 </form>
 {% endblock %}

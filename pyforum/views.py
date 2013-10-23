@@ -52,6 +52,24 @@ def compose_post(request, thread_id):
                                                     'thread': thread})
 
 
+def edit_post(request, post_id):
+    """
+    Modify an existing post
+    """
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('pyforum:forum_list'))
+
+    post = get_object_or_404(Post, pk=post_id)
+
+    if post.user.id != request.user.id:
+        thread_id = post.thread.id
+        return HttpResponseRedirect(reverse('pyforum:thread_detail',
+                                    args=(thread_id,)))
+
+    return render(request, 'pyforum/compose.html', {'mode': 'edit_post',
+                                                    'post': post})
+
+
 def save_post(request):
     """
     Try to save a new thread/post into database
@@ -93,6 +111,22 @@ def save_post(request):
 
         return HttpResponseRedirect(reverse('pyforum:thread_detail', 
                                             args=(thread_id,)))
+
+    elif mode == 'edit_post':
+        post_id = request.POST['post_id']
+        post = get_object_or_404(Post, pk=post_id)
+
+        post.title = title
+        post.content = content
+        post.save()
+
+        thread_id = post.thread.id
+
+        return HttpResponseRedirect(reverse('pyforum:thread_detail',
+                                            args=(thread_id,)))
+
+    else:
+        return HttpResponseRedirect(reverse('pyforum:forum_list'))
 
 
 def thread_detail(request, thread_id):
