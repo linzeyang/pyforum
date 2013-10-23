@@ -101,6 +101,9 @@ def thread_detail(request, thread_id):
     """
     thread = get_object_or_404(Thread, pk=thread_id)
 
+    thread.num_of_clicks += 1
+    thread.save()
+
     return render(request, 'pyforum/thread_detail.html', {'thread': thread})
 
 

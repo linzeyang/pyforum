@@ -5,14 +5,24 @@ Compose New {% ifequal mode 'new_thread' %}Thread{% else %}Post{% endifequal %} 
 {% endblock %}
 
 {% block nav %}
-Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >> 
+<span>
+  <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
+</span>
 {% ifequal mode 'new_thread' %}
-<a href="{% url 'pyforum:forum_detail' forum.id %}">{{ forum.title }}</a>
+<span>
+  <a href="{% url 'pyforum:forum_detail' forum.id %}">{{ forum.title }}</a>
+</span>
 {% else %}
-<a href="{% url 'pyforum:forum_detail' thread.forum.id %}">{{ thread.forum.title }}</a> >>  
-<a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a>
-{% endifequal %} >> 
-<a href="">Compose</a>
+<span>
+  <a href="{% url 'pyforum:forum_detail' thread.forum.id %}">{{ thread.forum.title }}</a> >>
+</span>
+<span>
+  <a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a>
+</span>
+{% endifequal %} >>
+<span>
+  <a href="">Compose</a>
+</span>
 {% endblock %}
 
 {% block content %}

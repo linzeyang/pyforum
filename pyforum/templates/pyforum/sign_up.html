@@ -3,7 +3,12 @@
 {% block title %}Sign Up | PyForum{% endblock %}
 
 {% block nav %}
-Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >> <a href="">Sign Up</a>
+<span>
+  <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
+</span>
+<span>
+  <a href="">Sign Up</a>
+</span>
 {% endblock %}
 
 {% block content %}

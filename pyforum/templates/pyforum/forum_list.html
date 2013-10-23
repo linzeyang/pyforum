@@ -3,17 +3,26 @@
 {% block title %}Welcome ! | PyForum{% endblock %}
 
 {% block nav %}
-<nav class="row">
-  <span>Your location: <a href="">PyForum</a></span>
-</nav>
+<span>
+  <a href="">PyForum</a>
+</span>
 {% endblock %}
 
 {% block content %}
+  <div id="forum_list">
   {% for f in forums %}
   <section class="row">
-    <a href="{% url 'pyforum:forum_detail' f.id %}"><h3>{{ f.title }}</h3></a>
-    <p>{{ f.description }}</p>
-    <p>Threads: {{ f.thread_set.all.count }}</p>
+    <span class="col-md-6">
+      <a href="{% url 'pyforum:forum_detail' f.id %}">{{ f.title }}</a>
+    </span>
+    <span class="col-md-3 col-md-offset-3">
+      Threads: {{ f.thread_set.all.count }}
+    </span>
   </section>
+  <div class="row">
+    <p class="col-md-6">{{ f.description }}</p>
+  </div>
+  <hr />
   {% endfor %}
+  </div>
 {% endblock %}

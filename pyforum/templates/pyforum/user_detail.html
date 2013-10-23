@@ -1,24 +1,31 @@
 {% extends 'pyforum/base.html' %}
 
-{% block title %}User: {{ user.username }} | PyForum{% endblock %}
+{% block title %}{{ user.username }} | PyForum{% endblock %}
 
 {% block nav %}
-<nav class="row">
-  <span>Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
-    <a href="">User Detail</a>
-  </span>
-</nav>
+<span>
+  <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
+</span>
+<span>
+  <a href="">User Detail</a>
+</span>
 {% endblock %}
 
 {% block content %}
-<section class="row">
-  <p>Username: {{ user.username }}</p>
-  <p>Email: {{ user.email }}</p>
-  <p>Signature: {{ user.signature }}</p>
-  <p>Date Joined: {{ user.date_joined }}</p>
-  <b>Posts:</b>
-  {% for post in user.post_set.all %}
-  <p>{{ post.title }}   ---   {{ post.time_posted }}</p>
-  {% endfor %}
-</section>
+<div id="user">
+  <section>
+    <div class="row"><span class="col-md-6"><h2>{{ user.username }}</h2></span></div>
+    <div class="row"><span class="col-md-3">First Name:</span><span class="col-md-3">{{ user.first_name }}</span></div>
+    <div class="row"><span class="col-md-3">Last Name:</span><span class="col-md-3">{{ user.last_name }}</span></div>
+    <div class="row"><span class="col-md-3">Email:</span><span class="col-md-3">{{ user.email }}</span></div>
+    <div class="row"><span class="col-md-3">Signature:</span><span class="col-md-3">{{ user.signature }}</span></div>
+    <div class="row"><span class="col-md-3">Date Joined:</span><span class="col-md-3">{{ user.date_joined }}</span></div>
+    <div class="row"><span class="col-md-3">Last Login:</span><span class="col-md-3">{{ user.last_login }}</span></div>
+    <hr />
+    <b>Posts:</b>
+    {% for post in user.post_set.all %}
+    <div class="row"><span class="col-md-6">{{ post.title }}</span><span class="col-md-3">{{ post.time_posted }}</span></div>
+    {% endfor %}
+  </section>
+</div>
 {% endblock %}

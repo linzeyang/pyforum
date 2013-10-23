@@ -19,37 +19,39 @@
 
   <body>
     <div class="container">
-      {% block header %}
-      <header class="row">
-        <h1>PyForum</h1>
-      </header>
-      <p>
+
+      <div id="top_row" class="row text-right">
       {% if not user.is_authenticated %}
         <a href="{% url 'pyforum:sign_up' %}">Sign Up</a>
         <a href="{% url 'pyforum:sign_in' %}">Sign In</a>
       {% else %}
         You have signed in using
-        [<a href="{% url 'pyforum:user_detail' user.id %}">{{ user.username }}</a>].
+        [  <a href="{% url 'pyforum:user_detail' user.id %}">{{ user.username }}</a>  ].
         <a href="{% url 'pyforum:sign_out' %}">Sign Out</a>
       {% endif %}
-      </p>
-      {% endblock %}
+      </div>
 
+      <header id="site_header" class="row">
+        <h1>PyForum</h1>
+      </header>
+
+      <nav id="site_nav" class="row">
+      Your location: 
       {% block nav %}
-      <nav class="row">
         <span>Navigation area</span>
-      </nav>
       {% endblock %}
+      </nav>
 
       {% block content %}
       <p>PyForum content area</p>
       {% endblock %}
 
       {% block footer %}
-      <footer class="row">
-        <small>Powered by Django. Developed by <a href="mailto:zeyanglin2013@gmail.com">Zeyang Lin</a>.</small>
+      <footer id="site_footer" class="row">
+        PyForum <small>Powered by Django. Developed by <a href="mailto:zeyanglin2013@gmail.com">Zeyang Lin</a>.</small>
       </footer>
       {% endblock %}
+
     </div>
   </body>
 </html>

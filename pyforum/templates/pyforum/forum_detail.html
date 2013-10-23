@@ -3,14 +3,17 @@
 {% block title %}{{ forum.title }} | PyForum{% endblock %}
 
 {% block nav %}
-<nav class="row">
-  <span>Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
-    <a href="">{{ forum.title }}</a>
-  </span>
-</nav>
+<span>
+  <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
+</span>
+<span>
+  <a href="">{{ forum.title }}</a>
+</span>
 {% endblock %}
 
 {% block content %}
+  <div id="thread_list">
+
   {% if user.is_authenticated %}
   <a href="{% url 'pyforum:compose_thread' forum.id %}" class="btn btn-default">New Thread</a>
   {% endif %}
@@ -18,13 +21,16 @@
   {% for thread in forum.thread_set.all %}
   <section class="row">
     <span class="col-md-6"><a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a></span>
-    <span class="col-md-2"><a href="{% url 'pyforum:user_detail' thread.post_set.all.0.user.id %}">{{ thread.post_set.all.0.user.username }}</a></span>
+    <span class="col-md-1"><a href="{% url 'pyforum:user_detail' thread.post_set.all.0.user.id %}">{{ thread.post_set.all.0.user.username }}</a></span>
     <span class="col-md-2">Clicks: {{ thread.num_of_clicks }} Posts: {{ thread.post_set.all.count }}</span>
-    <span class="col-md-2">Posted: {{ thread.time_posted }}</span>
+    <span class="col-md-3">Posted: {{ thread.time_posted }}</span>
   </section>
+  <hr />
   {% endfor %}
 
   {% if user.is_authenticated %}
   <a href="{% url 'pyforum:compose_thread' forum.id %}" class="btn btn-default">New Thread</a>
   {% endif %}
+  
+  </div>
 {% endblock %}

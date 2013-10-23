@@ -1,1 +1,53 @@
 /* style.css */
+#site_header {
+	background-color: #B33B95;
+	color: #FFF;
+	padding-left: 20px;
+}
+
+#site_nav {
+	margin-top: 10px;
+	margin-bottom: 20px;
+	font-size: 1.3em;
+}
+
+#forum_list section {
+	margin-top: 20px;
+	font-size: 1.8em;
+}
+
+#forum_list p {
+	margin-bottom: 5px;
+	font-size: 1.3em;
+}
+
+#thread_list {
+	margin-bottom: 20px;
+}
+
+#thread_list section {
+	margin-top: 15px;
+	margin-bottom: 10px;
+	font-size: 1.3em;
+}
+
+#thread {
+	margin-bottom: 20px;
+}
+
+#thread article {
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+#thread header {
+	font-size: 1.8em;
+}
+
+.thread_content {
+	font-size: 1.2em;
+}
+
+#user {
+	margin-bottom: 20px;
+}

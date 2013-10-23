@@ -3,30 +3,47 @@
 {% block title %}{{ thread.title }} | {{ thread.forum.title }} | PyForum{% endblock %}
 
 {% block nav %}
-<nav class="row">
-  <span>Your location: <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
-    <a href="{% url 'pyforum:forum_detail' thread.forum.id %}">{{ thread.forum.title }}</a> >>
-    <a href="">{{ thread.title }}</a>
-  </span>
-</nav>
+<span>
+  <a href="{% url 'pyforum:forum_list' %}">PyForum</a> >>
+</span>
+<span>
+  <a href="{% url 'pyforum:forum_detail' thread.forum.id %}">{{ thread.forum.title }}</a> >>
+</span>
+<span>
+  <a href="">{{ thread.title }}</a>
+</span>
 {% endblock %}
 
 {% block content %}
+<div id="thread">
   {% if user.is_authenticated %}
   <a href="{% url 'pyforum:compose_post' thread.id %}" class="btn btn-default">Reply</a>
   {% endif %}
 
   {% for post in thread.post_set.all %}
-  <article class="row">
-    <header class="col-md-offset-1"><h3>{{ post.title }}</h3></header>
-    <p class="col-md-offset-1">
+  <article>
+    <div class="row">
+      <header class="col-md-10">{{ post.title }}</header>
+    </div>
+    <div class="row">
+      <p class="col-md-10">
       Posted: {{ post.time_posted }} By: <a href="{% url 'pyforum:user_detail' post.user.id %}">{{post.user.username}}</a>
-    </p>
-    <p class="col-md-10 col-md-offset-1">{{ post.content }}</p>
+      </p>
+    </div>
+    <div class="row">
+      <p class="col-md-10">
+      Last Modified: {{ post.time_last_modified }}
+      </p>
+    </div>
+    <div class="row">
+      <p class="col-md-10 thread_content">{{ post.content }}</p>
+    </div>
+    <hr />
   </article>
   {% endfor %}
 
   {% if user.is_authenticated %}
   <a href="{% url 'pyforum:compose_post' thread.id %}" class="btn btn-default">Reply</a>
   {% endif %}
+</div>
 {% endblock %}
