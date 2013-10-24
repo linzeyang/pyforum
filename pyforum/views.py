@@ -232,9 +232,7 @@ def sign_out(request):
     """
     Log out the current user
     """
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('pyforum:forum_list'))
-
-    logout(request)
+    if request.user.is_authenticated():
+        logout(request)
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))
