@@ -72,7 +72,8 @@ def edit_post(request, post_id):
 
 def save_post(request):
     """
-    Try to save a new thread/post into database
+    Try to save a new thread/post into database; or try to save
+    the new content of an existing post
     """
     if not request.user.is_authenticated():
         return HttpResponseRedirect(reverse('pyforum:forum_list'))
@@ -127,6 +128,26 @@ def save_post(request):
 
     else:
         return HttpResponseRedirect(reverse('pyforum:forum_list'))
+
+
+def delete_post(request, post_id):
+    """
+    Delete the given post from db
+    """
+    post = get_object_or_404(Post, pk=post_id)
+    thread = post.thread
+    forum = thread.forum
+
+    if request.user.id == post.user.id:
+        if post == thread.post_set.all()[0]:
+            thread.delete()
+            return HttpResponseRedirect(reverse('pyforum:forum_detail', 
+                                        args=(forum.id,)))
+        else:
+            post.delete()
+
+    return HttpResponseRedirect(reverse('pyforum:thread_detail', 
+                                        args=(thread.id,)))
 
 
 def thread_detail(request, thread_id):

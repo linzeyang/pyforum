@@ -42,6 +42,7 @@
     </div>
     {% ifequal user.id post.user.id %}
     <a href="{% url 'pyforum:edit_post' post.id %}" class="btn btn-success btn-sm">&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+    <a href="{% url 'pyforum:delete_post' post.id %}" class="btn btn-danger btn-sm">&nbsp;Delete&nbsp;</a>
     {% endifequal %}
     <hr />
   </article>
