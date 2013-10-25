@@ -27,18 +27,18 @@
     </div>
     <div class="row">
       <p class="col-md-10 text-success">
-      Posted: {{ post.time_posted }} By: <a href="{% url 'pyforum:user_detail' post.user.id %}">{{post.user.username}}</a>
+      Posted: {{ post.time_posted|date:"Y-m-d H:i:s" }} By: <a href="{% url 'pyforum:user_detail' post.user.id %}">{{post.user.username}}</a>
       </p>
     </div>
     {% if post.ever_modified %}
     <div class="row">
       <p class="col-md-10 text-warning">
-      Last Modified: {{ post.time_last_modified }}
+      Last Modified: {{ post.time_last_modified|date:"Y-m-d H:i:s" }}
       </p>
     </div>
     {% endif %}
     <div class="row">
-      <p class="col-md-10 thread_content">{{ post.content }}</p>
+      <p class="col-md-10 thread_content">{{ post.content|linebreaksbr|urlize }}</p>
     </div>
     {% ifequal user.id post.user.id %}
     <a href="{% url 'pyforum:edit_post' post.id %}" class="btn btn-success btn-sm">&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>

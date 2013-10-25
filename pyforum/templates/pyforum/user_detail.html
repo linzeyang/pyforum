@@ -20,14 +20,14 @@
     <dt>Last Name:</dt><dd>{{ user.last_name }}</dd>
     <dt>Email:</dt><dd>{{ user.email }}</dd>
     <dt>Signature:</dt><dd>{{ user.signature }}</dd>
-    <dt>Date Joined:</dt><dd>{{ user.date_joined }}</dd>
-    <dt>Last Login:</dt><dd>{{ user.last_login }}</dd>
+    <dt>Date Joined:</dt><dd>{{ user.date_joined|date:"Y-m-d H:i:s" }}</dd>
+    <dt>Last Login:</dt><dd>{{ user.last_login|date:"Y-m-d H:i:s" }}</dd>
   </dl>
   <hr />
   <p class="text-warning lead">Posts:</p>
   <dl class="dl-horizontal">
   {% for post in user.post_set.all %}
-  <dt>{{ post.title }}</dt><dd>{{ post.time_posted }}</dd>
+  <dt>{{ post.title }}</dt><dd>{{ post.time_posted|date:"Y-m-d H:i:s" }}</dd>
   {% endfor %}
   </dl>
 </div>

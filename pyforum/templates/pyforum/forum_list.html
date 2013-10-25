@@ -16,7 +16,7 @@
       <a href="{% url 'pyforum:forum_detail' f.id %}">{{ f.title }}</a>
     </span>
     <span class="col-md-3 col-md-offset-3">
-      Threads: {{ f.thread_set.all.count }}
+      {{ f.thread_set.all.count }} Thread{{ f.thread_set.all.count|pluralize }}
     </span>
   </section>
   <div class="row">
