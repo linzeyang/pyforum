@@ -17,13 +17,21 @@ def forum_list(request):
     return render(request, 'pyforum/forum_list.html', {'forums': forums})
 
 
-def forum_detail(request, forum_id):
+def forum_detail(request, forum_id, page_number=1):
     """
     Return all threads within a given forum
     """
     forum = get_object_or_404(Forum, pk=forum_id)
+
+    num_of_thread_per_page = 10
+    page_number = int(page_number)
+    start_thread = (page_number-1) * num_of_thread_per_page
+    end_thread = page_number * num_of_thread_per_page
+
+    threads = forum.thread_set.all()[start_thread : end_thread]
     
-    return render(request, 'pyforum/forum_detail.html', {'forum': forum})
+    return render(request, 'pyforum/forum_detail.html', {'forum': forum,
+                                                         'threads': threads})
 
 
 def compose_thread(request, forum_id):
@@ -150,16 +158,25 @@ def delete_post(request, post_id):
                                         args=(thread.id,)))
 
 
-def thread_detail(request, thread_id):
+def thread_detail(request, thread_id, page_number=1):
     """
     Return all posts within a given thread
     """
     thread = get_object_or_404(Thread, pk=thread_id)
 
-    thread.num_of_clicks += 1
-    thread.save()
+    if(page_number == 1):
+        thread.num_of_clicks += 1
+        thread.save()
 
-    return render(request, 'pyforum/thread_detail.html', {'thread': thread})
+    num_of_post_per_page = 20
+    page_number = int(page_number)
+    start_post = (page_number - 1) * num_of_post_per_page
+    end_post = page_number * num_of_post_per_page
+
+    posts = thread.post_set.all()[start_post : end_post]
+
+    return render(request, 'pyforum/thread_detail.html', {'thread': thread,
+                                                          'posts': posts})
 
 
 def user_detail(request, user_id):
@@ -257,3 +274,4 @@ def sign_out(request):
         logout(request)
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))
+

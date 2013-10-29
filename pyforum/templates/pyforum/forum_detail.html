@@ -18,7 +18,7 @@
   <a href="{% url 'pyforum:compose_thread' forum.id %}" class="btn btn-warning">New Thread</a>
   {% endif %}
 
-  {% for thread in forum.thread_set.all %}
+  {% for thread in threads %}
   <section class="row">
     <span class="col-md-6">
       <a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a>
@@ -32,6 +32,10 @@
     <span class="col-md-3">Posted: {{ thread.time_posted|date:"Y-m-d H:i:s" }}</span>
   </section>
   <hr />
+  {% empty %}
+  <p class="row text-danger">
+    No thread is returned ! Did you enter an invalid URL ?
+  </p>
   {% endfor %}
 
   {% if user.is_authenticated %}

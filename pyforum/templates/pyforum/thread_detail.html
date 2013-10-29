@@ -20,7 +20,7 @@
   <a href="{% url 'pyforum:compose_post' thread.id %}" class="btn btn-warning">&nbsp;&nbsp;Reply&nbsp;&nbsp;</a>
   {% endif %}
 
-  {% for post in thread.post_set.all %}
+  {% for post in posts %}
   <article>
     <div class="row">
       <header class="col-md-10">#{{ forloop.counter }} {{ post.title }}</header>
@@ -46,6 +46,10 @@
     {% endifequal %}
     <hr />
   </article>
+  {% empty %}
+  <p class="row text-danger">
+    No post is returned ! Did you enter an invalid URL ?
+  </p>
   {% endfor %}
 
   {% if user.is_authenticated %}
