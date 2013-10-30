@@ -93,6 +93,10 @@ def save_post(request):
     user_id = request.POST['user_id']
     user = get_object_or_404(User, pk=user_id)
     
+    add_signature = 'add_signature' in request.POST
+    if add_signature:
+        content += "\n\n    ------ %s" % user.signature
+
     if mode == 'new_thread':
         forum_id = request.POST['forum_id']
         forum = get_object_or_404(Forum, pk=forum_id)

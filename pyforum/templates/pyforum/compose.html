@@ -58,7 +58,7 @@
       {% else %}{% ifequal mode 'new_post' %}
         value="Re: {{ thread.title }}"
       {% else %}{% ifequal mode 'edit_post' %}
-        value="Re: {{ post.thread.title }}"
+        value="{{ post.title }}"
       {% endifequal %}{% endifequal %}{% endifequal %} />
   </div>
   
@@ -81,6 +81,9 @@
   {% else %}{% ifequal mode 'edit_post' %}
   <input type="hidden" name="post_id" value="{{ post.id }}">
   {% endifequal %}{% endifequal %}{% endifequal %}
+  <div class="checkbox">
+    <label><input type="checkbox" name="add_signature" />Include my signature</label>
+  </div>
   
   <input type="submit" class="btn btn-warning btn-lg" value="Submit" />
 </form>

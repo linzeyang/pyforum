@@ -21,31 +21,37 @@
   {% endif %}
 
   {% for post in posts %}
-  <article>
-    <div class="row">
-      <header class="col-md-10">#{{ forloop.counter }} {{ post.title }}</header>
-    </div>
-    <div class="row">
-      <p class="col-md-10 text-success">
-      Posted: {{ post.time_posted|date:"Y-m-d H:i:s" }} By: <a href="{% url 'pyforum:user_detail' post.user.id %}">{{post.user.username}}</a>
+  <article class="row">
+    <aside class="col-md-2">
+      <p class="text-info">#{{ forloop.counter }} </p>
+      <p><a href="{% url 'pyforum:user_detail' post.user.id %}">{{ post.user.username }}</a></p>
+      <p>Posts: {{ post.user.post_set.all.count }}<br />
+        Member Since:<br />
+        {{ post.user.date_joined|date:"Y-m-d" }}
       </p>
+      {% ifequal user.id post.user.id %}
+      <a href="{% url 'pyforum:edit_post' post.id %}" class="btn btn-success btn-sm">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</a>
+      <a href="{% url 'pyforum:delete_post' post.id %}" class="btn btn-danger btn-sm">&nbsp;Delete&nbsp;</a>
+      {% endifequal %}
+    </aside>
+    <div class="col-md-10">
+      <header>{{ post.title }}</header>
+      <div>
+        <span class="text-success">
+        Posted: {{ post.time_posted|date:"Y-m-d H:i:s" }}
+        </span>
+      {% if post.ever_modified %}
+        <span class="text-warning">
+        Last Modified: {{ post.time_last_modified|date:"Y-m-d H:i:s" }}
+        </span>
+      {% endif %}
+      </div>
+      <div class="row">
+        <p class="col-md-10 thread_content">{{ post.content|linebreaksbr|urlize }}</p>
+      </div>
     </div>
-    {% if post.ever_modified %}
-    <div class="row">
-      <p class="col-md-10 text-warning">
-      Last Modified: {{ post.time_last_modified|date:"Y-m-d H:i:s" }}
-      </p>
-    </div>
-    {% endif %}
-    <div class="row">
-      <p class="col-md-10 thread_content">{{ post.content|linebreaksbr|urlize }}</p>
-    </div>
-    {% ifequal user.id post.user.id %}
-    <a href="{% url 'pyforum:edit_post' post.id %}" class="btn btn-success btn-sm">&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
-    <a href="{% url 'pyforum:delete_post' post.id %}" class="btn btn-danger btn-sm">&nbsp;Delete&nbsp;</a>
-    {% endifequal %}
-    <hr />
   </article>
+  <hr />
   {% empty %}
   <p class="row text-danger">
     No post is returned ! Did you enter an invalid URL ?
