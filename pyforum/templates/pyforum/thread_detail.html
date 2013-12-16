@@ -22,7 +22,7 @@
 
   {% for post in posts %}
   <article class="row">
-    <aside class="col-md-2">
+    <aside class="col-xs-3 col-md-2">
       <p class="text-info">#{{ forloop.counter }} </p>
       <p><a href="{% url 'pyforum:user_detail' post.user.id %}">{{ post.user.username }}</a></p>
       <p>Posts: {{ post.user.post_set.all.count }}<br />
@@ -34,7 +34,7 @@
       <a href="{% url 'pyforum:delete_post' post.id %}" class="btn btn-danger btn-sm">&nbsp;Delete&nbsp;</a>
       {% endifequal %}
     </aside>
-    <div class="col-md-10">
+    <div class="col-xs-9 col-md-10">
       <header>{{ post.title }}</header>
       <div>
         <span class="text-success">

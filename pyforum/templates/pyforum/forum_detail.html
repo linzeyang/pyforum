@@ -20,13 +20,13 @@
 
   {% for thread in threads %}
   <section class="row">
-    <span class="col-md-6">
+    <span class="col-xs-5 col-md-6">
       <a href="{% url 'pyforum:thread_detail' thread.id %}">{{ thread.title }}</a>
     </span>
-    <span class="col-md-1">
+    <span class="col-xs-3 col-md-1">
       <a href="{% url 'pyforum:user_detail' thread.post_set.all.0.user.id %}">{{ thread.post_set.all.0.user.username }}</a>
     </span>
-    <span class="col-md-2">
+    <span class="col-xs-4col-md-2">
       {{ thread.num_of_clicks }} Click{{ thread.num_of_clicks|pluralize }}, 
       {{ thread.post_set.all.count }} Post{{ thread.post_set.all.count|pluralize }}</span>
     <span class="col-md-3">Posted: {{ thread.time_posted|date:"Y-m-d H:i:s" }}</span>

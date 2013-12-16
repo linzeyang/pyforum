@@ -12,15 +12,15 @@
   <div id="forum_list">
   {% for f in forums %}
   <section class="row">
-    <span class="col-md-6">
+    <span class="col-xs-6 col-md-6">
       <a href="{% url 'pyforum:forum_detail' f.id %}">{{ f.title }}</a>
     </span>
-    <span class="col-md-3 col-md-offset-3">
+    <span class="col-xs-4 col-xs-offset-2 col-md-3 col-md-offset-3">
       {{ f.thread_set.all.count }} Thread{{ f.thread_set.all.count|pluralize }}
     </span>
   </section>
   <div class="row">
-    <p class="col-md-6">{{ f.description }}</p>
+    <p class="col-xs-10 col-md-6">{{ f.description }}</p>
   </div>
   <hr />
   {% endfor %}
