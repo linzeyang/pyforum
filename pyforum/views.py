@@ -10,7 +10,7 @@ from pyforum.models import User, Forum, Thread, Post
 
 def forum_list(request):
     """
-    Retuen all the forums in a list
+    Return all the forums in a list
     """
     forums = Forum.objects.all()
 
