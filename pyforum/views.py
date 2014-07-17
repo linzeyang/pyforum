@@ -28,8 +28,8 @@ def forum_detail(request, forum_id, page_number=1):
     start_thread = (page_number-1) * num_of_thread_per_page
     end_thread = page_number * num_of_thread_per_page
 
-    threads = forum.thread_set.all()[start_thread : end_thread]
-    
+    threads = forum.thread_set.all()[start_thread: end_thread]
+
     return render(request, 'pyforum/forum_detail.html', {'forum': forum,
                                                          'threads': threads})
 
@@ -92,7 +92,7 @@ def save_post(request):
 
     user_id = request.POST['user_id']
     user = get_object_or_404(User, pk=user_id)
-    
+
     add_signature = 'add_signature' in request.POST
     if add_signature:
         content += "\n\n    ------ %s" % user.signature
@@ -112,7 +112,7 @@ def save_post(request):
                         content=content)
         new_post.save()
 
-        return HttpResponseRedirect(reverse('pyforum:forum_detail', 
+        return HttpResponseRedirect(reverse('pyforum:forum_detail',
                                             args=(forum_id,)))
 
     elif mode == 'new_post':
@@ -122,7 +122,7 @@ def save_post(request):
         new_post = Post(title=title, thread=thread, user=user, content=content)
         new_post.save()
 
-        return HttpResponseRedirect(reverse('pyforum:thread_detail', 
+        return HttpResponseRedirect(reverse('pyforum:thread_detail',
                                             args=(thread_id,)))
 
     elif mode == 'edit_post':
@@ -153,12 +153,12 @@ def delete_post(request, post_id):
     if request.user.id == post.user.id:
         if post == thread.post_set.all()[0]:
             thread.delete()
-            return HttpResponseRedirect(reverse('pyforum:forum_detail', 
+            return HttpResponseRedirect(reverse('pyforum:forum_detail',
                                         args=(forum.id,)))
         else:
             post.delete()
 
-    return HttpResponseRedirect(reverse('pyforum:thread_detail', 
+    return HttpResponseRedirect(reverse('pyforum:thread_detail',
                                         args=(thread.id,)))
 
 
@@ -177,7 +177,7 @@ def thread_detail(request, thread_id, page_number=1):
     start_post = (page_number - 1) * num_of_post_per_page
     end_post = page_number * num_of_post_per_page
 
-    posts = thread.post_set.all()[start_post : end_post]
+    posts = thread.post_set.all()[start_post: end_post]
 
     return render(request, 'pyforum/thread_detail.html', {'thread': thread,
                                                           'posts': posts})
@@ -213,19 +213,19 @@ def save_user(request):
     signature = request.POST['signature']
 
     if len(username) == 0:
-        return render(request, 'pyforum/sign_up.html', 
-                        {'error': 'Username cannot be empty !'})
+        return render(request, 'pyforum/sign_up.html',
+                      {'error': 'Username cannot be empty !'})
 
     if len(email) == 0:
-        return render(request, 'pyforum/sign_up.html', 
-                        {'error': 'Email address cannot be empty !'})
+        return render(request, 'pyforum/sign_up.html',
+                      {'error': 'Email address cannot be empty !'})
 
     if password != password_again:
-        return render(request, 'pyforum/sign_up.html', 
-                        {'error': 'Passwords are not identical !'})
+        return render(request, 'pyforum/sign_up.html',
+                      {'error': 'Passwords are not identical !'})
     elif len(password) == 0:
-        return render(request, 'pyforum/sign_up.html', 
-                        {'error': 'Password cannot be empty !'})
+        return render(request, 'pyforum/sign_up.html',
+                      {'error': 'Password cannot be empty !'})
 
     new_user = User.objects.create_user(username, email, password,
                                         signature=signature)
@@ -252,18 +252,18 @@ def auth_user(request):
     password = request.POST['password']
 
     if len(username) == 0 or len(password) == 0:
-        return render(request, 'pyforum/sign_in.html', 
-                        {'error': 'Username/Password cannot be empty !'})
+        return render(request, 'pyforum/sign_in.html',
+                      {'error': 'Username/Password cannot be empty !'})
 
     user = authenticate(username=username, password=password)
 
     if user is None:
-        return render(request, 'pyforum/sign_in.html', 
-                        {'error': 'Username/Password incorrect !'})
+        return render(request, 'pyforum/sign_in.html',
+                      {'error': 'Username/Password incorrect !'})
 
     if not user.is_active:
-        return render(request, 'pyforum/sign_in.html', 
-                        {'error': 'Your account is inactive !'})
+        return render(request, 'pyforum/sign_in.html',
+                      {'error': 'Your account is inactive !'})
 
     login(request, user)
 
@@ -278,4 +278,3 @@ def sign_out(request):
         logout(request)
 
     return HttpResponseRedirect(reverse('pyforum:forum_list'))
-
